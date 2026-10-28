@@ -1,0 +1,1802 @@
+[
+	{
+		"type": "trigger.webhook",
+		"label": "Webhook",
+		"description": "Start the workflow when an HTTP request arrives",
+		"category": "trigger",
+		"icon": "Webhook",
+		"ports": {
+			"in": [],
+			"out": ["out"]
+		},
+		"credentialTypes": ["http.basic", "http.header", "jwt.auth"],
+		"actions": [],
+		"fields": [
+			{
+				"name": "httpMethod",
+				"type": "string",
+				"required": false,
+				"options": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"],
+				"default": "POST"
+			},
+			{
+				"name": "path",
+				"type": "string",
+				"required": false
+			},
+			{
+				"name": "authentication",
+				"type": "string",
+				"required": false,
+				"options": ["none", "basic", "header", "jwt"],
+				"default": "none"
+			},
+			{
+				"name": "responseMode",
+				"type": "string",
+				"required": false,
+				"options": ["immediate", "lastNode", "respondNode"],
+				"default": "immediate"
+			},
+			{
+				"name": "allowedOrigins",
+				"type": "string",
+				"description": "Comma separated. * allows all. https://*.example.com allows subdomains.",
+				"required": false
+			},
+			{
+				"name": "ignoreBots",
+				"type": "boolean",
+				"required": false
+			},
+			{
+				"name": "ipAllowlist",
+				"type": "string",
+				"description": "Comma separated. Ranges: 10.0.0.0/8",
+				"required": false
+			},
+			{
+				"name": "noResponseBody",
+				"type": "boolean",
+				"required": false
+			},
+			{
+				"name": "onlyRunIf",
+				"type": "string",
+				"description": "An expression. The run starts when it is true.",
+				"required": false
+			},
+			{
+				"name": "rawBody",
+				"type": "boolean",
+				"required": false
+			},
+			{
+				"name": "binaryProperty",
+				"type": "string",
+				"description": "Save the body as a file under this name in the binary data.",
+				"required": false
+			},
+			{
+				"name": "responseCode",
+				"type": "integer",
+				"required": false
+			},
+			{
+				"name": "responseData",
+				"type": "string",
+				"required": false
+			},
+			{
+				"name": "responseHeaders",
+				"type": "object",
+				"required": false
+			}
+		]
+	},
+	{
+		"type": "trigger.cron",
+		"label": "Schedule",
+		"description": "Start the workflow on a time schedule",
+		"category": "trigger",
+		"icon": "CalendarClock",
+		"ports": {
+			"in": [],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "expression",
+				"type": "string",
+				"required": true,
+				"default": "0 * * * *"
+			},
+			{
+				"name": "timezone",
+				"type": "string",
+				"required": false
+			}
+		]
+	},
+	{
+		"type": "trigger.manual",
+		"label": "Manual",
+		"description": "Start the workflow by hand with a button",
+		"category": "trigger",
+		"icon": "MousePointerClick",
+		"ports": {
+			"in": [],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": []
+	},
+	{
+		"type": "trigger.error",
+		"label": "Error Trigger",
+		"description": "Start when a live run of another workflow fails",
+		"category": "trigger",
+		"icon": "TriangleAlert",
+		"ports": {
+			"in": [],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": []
+	},
+	{
+		"type": "trigger.http_poll",
+		"label": "HTTP Poll",
+		"description": "Check a JSON API on a timer and start a run for each new item",
+		"category": "trigger",
+		"icon": "RefreshCw",
+		"ports": {
+			"in": [],
+			"out": ["out"]
+		},
+		"credentialTypes": [
+			"http.basic",
+			"http.bearer",
+			"http.header",
+			"oauth2.generic"
+		],
+		"actions": [],
+		"fields": [
+			{
+				"name": "url",
+				"type": "string",
+				"required": true,
+				"default": "https://"
+			},
+			{
+				"name": "intervalSeconds",
+				"type": "integer",
+				"required": false,
+				"default": 300
+			},
+			{
+				"name": "itemsPath",
+				"type": "string",
+				"description": "Where the list is in the response, for example data.items. Empty: the response is the list.",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "keyPath",
+				"type": "string",
+				"description": "Where the unique id is inside an item, for example id. A key that was seen starts no run.",
+				"required": true,
+				"default": "id"
+			},
+			{
+				"name": "newestFirst",
+				"type": "boolean",
+				"description": "Most APIs list the newest item first. Turn off when the oldest comes first.",
+				"required": false,
+				"default": true
+			},
+			{
+				"name": "maxItems",
+				"type": "integer",
+				"description": "Only the newest items of the list are read.",
+				"required": false,
+				"default": 100
+			}
+		]
+	},
+	{
+		"type": "http.request",
+		"label": "HTTP Request",
+		"description": "Call any HTTP API and get the response",
+		"category": "core",
+		"icon": "Globe",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [
+			"http.basic",
+			"http.bearer",
+			"http.header",
+			"oauth2.generic"
+		],
+		"actions": [],
+		"fields": [
+			{
+				"name": "method",
+				"type": "string",
+				"required": true,
+				"options": ["GET", "POST", "PUT", "PATCH", "DELETE"],
+				"default": "GET"
+			},
+			{
+				"name": "url",
+				"type": "string",
+				"required": true,
+				"default": "https://"
+			},
+			{
+				"name": "sendQuery",
+				"type": "boolean",
+				"required": false,
+				"default": false
+			},
+			{
+				"name": "query",
+				"type": "object",
+				"required": false
+			},
+			{
+				"name": "sendHeaders",
+				"type": "boolean",
+				"required": false,
+				"default": false
+			},
+			{
+				"name": "headers",
+				"type": "object",
+				"required": false
+			},
+			{
+				"name": "sendBody",
+				"type": "boolean",
+				"required": false,
+				"default": false
+			},
+			{
+				"name": "body",
+				"type": "any",
+				"required": false
+			},
+			{
+				"name": "timeoutMs",
+				"type": "integer",
+				"required": false,
+				"default": 30000
+			},
+			{
+				"name": "fullResponse",
+				"type": "boolean",
+				"description": "Return status, headers, and body. Error statuses do not fail the node.",
+				"required": false,
+				"default": false
+			}
+		]
+	},
+	{
+		"type": "logic.if",
+		"label": "If",
+		"description": "Split items into true and false paths",
+		"category": "logic",
+		"icon": "GitBranch",
+		"ports": {
+			"in": ["in"],
+			"out": ["true", "false"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "condition",
+				"type": "any",
+				"required": true,
+				"default": "{{ $input.status == 200 }}"
+			}
+		]
+	},
+	{
+		"type": "logic.switch",
+		"label": "Switch",
+		"description": "Route items to one of many outputs by rules",
+		"category": "logic",
+		"icon": "Split",
+		"ports": {
+			"in": ["in"],
+			"out": ["default"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "value",
+				"type": "any",
+				"required": true,
+				"default": "{{ $input.status }}"
+			},
+			{
+				"name": "cases",
+				"type": "array",
+				"required": true,
+				"default": ["200", "404"]
+			}
+		]
+	},
+	{
+		"type": "data.set",
+		"label": "Set Fields",
+		"description": "Add or change fields on each item",
+		"category": "data",
+		"icon": "PenLine",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "fields",
+				"type": "object",
+				"required": true,
+				"default": {}
+			},
+			{
+				"name": "keepInput",
+				"type": "boolean",
+				"required": false,
+				"default": true
+			}
+		]
+	},
+	{
+		"type": "data.aggregate",
+		"label": "Aggregate",
+		"description": "Combine a field from many items into a list in a single item",
+		"category": "data",
+		"icon": "Combine",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "list",
+				"type": "any",
+				"required": true,
+				"default": "{{ $input }}"
+			},
+			{
+				"name": "fields",
+				"type": "array",
+				"required": false,
+				"default": []
+			},
+			{
+				"name": "outputField",
+				"type": "string",
+				"required": false,
+				"default": "data"
+			},
+			{
+				"name": "skipMissing",
+				"type": "boolean",
+				"required": false,
+				"default": false
+			}
+		]
+	},
+	{
+		"type": "data.crypto",
+		"label": "Crypto",
+		"description": "Hash, sign, or make random values",
+		"category": "data",
+		"icon": "KeyRound",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [
+			"Hash a value",
+			"Sign a value with HMAC",
+			"Make a random string",
+			"Make a random UUID"
+		],
+		"fields": [
+			{
+				"name": "action",
+				"type": "string",
+				"required": false,
+				"options": ["hash", "hmac", "randomString", "uuid"],
+				"default": "hash"
+			},
+			{
+				"name": "value",
+				"type": "string",
+				"required": false,
+				"default": "{{ $input.value }}"
+			},
+			{
+				"name": "algorithm",
+				"type": "string",
+				"required": false,
+				"options": ["md5", "sha1", "sha256", "sha384", "sha512"],
+				"default": "sha256"
+			},
+			{
+				"name": "secret",
+				"type": "string",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "encoding",
+				"type": "string",
+				"required": false,
+				"options": ["hex", "base64"],
+				"default": "hex"
+			},
+			{
+				"name": "bytes",
+				"type": "integer",
+				"required": false,
+				"default": 16
+			},
+			{
+				"name": "outputField",
+				"type": "string",
+				"required": false,
+				"default": "result"
+			}
+		]
+	},
+	{
+		"type": "data.dateTime",
+		"label": "Date & Time",
+		"description": "Manipulate date and time values",
+		"category": "data",
+		"icon": "CalendarDays",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [
+			"Get the current date",
+			"Add time to a date",
+			"Subtract time from a date",
+			"Round a date to the start",
+			"Get the difference between dates",
+			"Format a date",
+			"Convert a date to a timestamp"
+		],
+		"fields": [
+			{
+				"name": "action",
+				"type": "string",
+				"required": false,
+				"options": [
+					"now",
+					"add",
+					"subtract",
+					"startOf",
+					"difference",
+					"format",
+					"toTimestamp"
+				],
+				"default": "format"
+			},
+			{
+				"name": "date",
+				"type": "string",
+				"required": false,
+				"default": "{{ $input.date }}"
+			},
+			{
+				"name": "other",
+				"type": "string",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "amount",
+				"type": "number",
+				"required": false,
+				"default": 1
+			},
+			{
+				"name": "unit",
+				"type": "string",
+				"required": false,
+				"options": [
+					"seconds",
+					"minutes",
+					"hours",
+					"days",
+					"weeks",
+					"months",
+					"years"
+				],
+				"default": "days"
+			},
+			{
+				"name": "pattern",
+				"type": "string",
+				"required": false,
+				"default": "YYYY-MM-DD HH:mm:ss"
+			},
+			{
+				"name": "outputField",
+				"type": "string",
+				"required": false,
+				"default": "result"
+			}
+		]
+	},
+	{
+		"type": "data.merge",
+		"label": "Merge",
+		"description": "Merge data of multiple streams once data from all inputs is available",
+		"category": "data",
+		"icon": "Merge",
+		"ports": {
+			"in": ["input1", "input2"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [
+			"Append the items of the inputs",
+			"Combine items by position",
+			"Combine items by field",
+			"Combine every item with every item",
+			"Choose a branch"
+		],
+		"fields": [
+			{
+				"name": "mode",
+				"type": "string",
+				"required": false,
+				"options": [
+					"append",
+					"combineByPosition",
+					"combineByField",
+					"combineAll",
+					"chooseBranch"
+				],
+				"default": "append"
+			},
+			{
+				"name": "numberInputs",
+				"type": "integer",
+				"description": "From 2 to 10. Lowering it removes the edges that go into the inputs that are gone.",
+				"required": false,
+				"default": 2
+			},
+			{
+				"name": "matchFields",
+				"type": "array",
+				"description": "All pairs must match. With no pair, the field id is used",
+				"required": false,
+				"default": [
+					{
+						"field1": "id",
+						"field2": "id"
+					}
+				]
+			},
+			{
+				"name": "differentNames",
+				"type": "boolean",
+				"description": "Off: the name of input 1 is used for input 2 too",
+				"required": false
+			},
+			{
+				"name": "field1",
+				"type": "string",
+				"required": false
+			},
+			{
+				"name": "field2",
+				"type": "string",
+				"required": false
+			},
+			{
+				"name": "join",
+				"type": "string",
+				"required": false,
+				"options": [
+					"keepMatches",
+					"keepNonMatches",
+					"enrichInput1",
+					"enrichInput2",
+					"keepEverything",
+					"keepAll"
+				],
+				"default": "keepMatches"
+			},
+			{
+				"name": "multipleMatches",
+				"type": "string",
+				"required": false,
+				"options": ["all", "first"]
+			},
+			{
+				"name": "disableDotNotation",
+				"type": "boolean",
+				"description": "Off: \"a.b\" reads the key b inside the key a. On: it is the key \"a.b\"",
+				"required": false
+			},
+			{
+				"name": "fuzzyCompare",
+				"type": "boolean",
+				"description": "On: the number 1 and the text \"1\" are the same value",
+				"required": false
+			},
+			{
+				"name": "includeUnpaired",
+				"type": "boolean",
+				"description": "Off: only the positions that every input has",
+				"required": false
+			},
+			{
+				"name": "clash",
+				"type": "string",
+				"required": false,
+				"options": ["preferInput2", "preferInput1", "suffix"]
+			},
+			{
+				"name": "suffix1",
+				"type": "string",
+				"required": false
+			},
+			{
+				"name": "suffix2",
+				"type": "string",
+				"required": false
+			},
+			{
+				"name": "nested",
+				"type": "string",
+				"required": false,
+				"options": ["shallow", "deep"]
+			},
+			{
+				"name": "output",
+				"type": "string",
+				"required": false,
+				"options": [
+					"input1",
+					"input2",
+					"input3",
+					"input4",
+					"input5",
+					"input6",
+					"input7",
+					"input8",
+					"input9",
+					"input10",
+					"empty"
+				],
+				"default": "input1"
+			}
+		]
+	},
+	{
+		"type": "data.filter",
+		"label": "Filter",
+		"description": "Keep only items matching a condition",
+		"category": "data",
+		"icon": "Filter",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "list",
+				"type": "any",
+				"required": true,
+				"default": "{{ $input }}"
+			},
+			{
+				"name": "condition",
+				"type": "string",
+				"required": true,
+				"default": "{{ $item.status == 200 }}"
+			}
+		]
+	},
+	{
+		"type": "data.limit",
+		"label": "Limit",
+		"description": "Restrict the number of items",
+		"category": "data",
+		"icon": "ListEnd",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "list",
+				"type": "any",
+				"required": true,
+				"default": "{{ $input }}"
+			},
+			{
+				"name": "max",
+				"type": "integer",
+				"required": false,
+				"default": 1
+			},
+			{
+				"name": "keep",
+				"type": "string",
+				"required": false,
+				"options": ["first", "last"],
+				"default": "first"
+			}
+		]
+	},
+	{
+		"type": "data.removeDuplicates",
+		"label": "Remove Duplicates",
+		"description": "Delete items with matching field values",
+		"category": "data",
+		"icon": "CopyX",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "list",
+				"type": "any",
+				"required": true,
+				"default": "{{ $input }}"
+			},
+			{
+				"name": "fields",
+				"type": "array",
+				"required": false,
+				"default": []
+			}
+		]
+	},
+	{
+		"type": "data.renameKeys",
+		"label": "Rename Keys",
+		"description": "Update item field names",
+		"category": "data",
+		"icon": "TextCursorInput",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "keys",
+				"type": "object",
+				"required": true,
+				"default": {}
+			}
+		]
+	},
+	{
+		"type": "data.replaceText",
+		"label": "Replace Text",
+		"description": "Find and replace text in a field",
+		"category": "data",
+		"icon": "Replace",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "field",
+				"type": "string",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "search",
+				"type": "string",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "regex",
+				"type": "boolean",
+				"required": false,
+				"default": false
+			},
+			{
+				"name": "flags",
+				"type": "string",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "replacement",
+				"type": "string",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "replaceAll",
+				"type": "boolean",
+				"required": false,
+				"default": true
+			},
+			{
+				"name": "outputField",
+				"type": "string",
+				"required": false,
+				"default": ""
+			}
+		]
+	},
+	{
+		"type": "data.sort",
+		"label": "Sort",
+		"description": "Change items order",
+		"category": "data",
+		"icon": "ArrowUpDown",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "list",
+				"type": "any",
+				"required": true,
+				"default": "{{ $input }}"
+			},
+			{
+				"name": "field",
+				"type": "string",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "order",
+				"type": "string",
+				"required": false,
+				"options": ["ascending", "descending"],
+				"default": "ascending"
+			}
+		]
+	},
+	{
+		"type": "data.summarize",
+		"label": "Summarize",
+		"description": "Sum, count, max, etc. across items",
+		"category": "data",
+		"icon": "Sigma",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "list",
+				"type": "any",
+				"required": true,
+				"default": "{{ $input }}"
+			},
+			{
+				"name": "summaries",
+				"type": "array",
+				"required": true,
+				"default": [
+					{
+						"operation": "count",
+						"field": ""
+					}
+				]
+			},
+			{
+				"name": "groupBy",
+				"type": "string",
+				"required": false,
+				"default": ""
+			}
+		]
+	},
+	{
+		"type": "data.html_extract",
+		"label": "HTML Extract",
+		"description": "Get data from HTML with CSS selectors",
+		"category": "data",
+		"icon": "FileSearch",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "html",
+				"type": "any",
+				"required": false,
+				"default": "{{ $input.data }}"
+			},
+			{
+				"name": "selectors",
+				"type": "object",
+				"description": "Output key and CSS selector, for example title and h1",
+				"required": false,
+				"default": {}
+			},
+			{
+				"name": "returnValue",
+				"type": "string",
+				"required": false,
+				"options": ["text", "html", "attribute", "value"],
+				"default": "text"
+			},
+			{
+				"name": "attribute",
+				"type": "string",
+				"required": false,
+				"default": "href"
+			},
+			{
+				"name": "returnArray",
+				"type": "boolean",
+				"description": "Return every match as an array. Off: return the first match",
+				"required": false,
+				"default": false
+			}
+		]
+	},
+	{
+		"type": "data.xml",
+		"label": "XML",
+		"description": "Convert between XML and JSON",
+		"category": "data",
+		"icon": "FileCode",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": ["Convert XML to JSON", "Convert JSON to XML"],
+		"fields": [
+			{
+				"name": "mode",
+				"type": "string",
+				"required": false,
+				"options": ["xmlToJson", "jsonToXml"],
+				"default": "xmlToJson"
+			},
+			{
+				"name": "value",
+				"type": "any",
+				"required": false,
+				"default": "{{ $input }}"
+			},
+			{
+				"name": "attributePrefix",
+				"type": "string",
+				"description": "Keys that start with this text are XML attributes",
+				"required": false,
+				"default": "@_"
+			},
+			{
+				"name": "textKey",
+				"type": "string",
+				"description": "The key for the text of an element that also has attributes or children",
+				"required": false,
+				"default": "#text"
+			},
+			{
+				"name": "explicitArray",
+				"type": "boolean",
+				"description": "Make an array of every child, also when there is one",
+				"required": false,
+				"default": false
+			},
+			{
+				"name": "rootName",
+				"type": "string",
+				"description": "The name of the top element",
+				"required": false,
+				"default": "root"
+			}
+		]
+	},
+	{
+		"type": "file.convert_to",
+		"label": "Convert to File",
+		"description": "Make a file from data: CSV, JSON, or text",
+		"category": "data",
+		"icon": "FileOutput",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "format",
+				"type": "string",
+				"required": false,
+				"options": ["csv", "json", "text"],
+				"default": "csv"
+			},
+			{
+				"name": "list",
+				"type": "any",
+				"required": false,
+				"default": "{{ $input }}"
+			},
+			{
+				"name": "text",
+				"type": "string",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "delimiter",
+				"type": "string",
+				"required": false,
+				"default": ","
+			},
+			{
+				"name": "header",
+				"type": "boolean",
+				"required": false,
+				"default": true
+			},
+			{
+				"name": "fileName",
+				"type": "string",
+				"description": "Empty: file.csv, file.json, or file.txt",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "property",
+				"type": "string",
+				"description": "The file is in binary.<property> of the output",
+				"required": false,
+				"default": "data"
+			}
+		]
+	},
+	{
+		"type": "file.extract_from",
+		"label": "Extract from File",
+		"description": "Read data from a file: CSV, JSON, or text",
+		"category": "data",
+		"icon": "FileInput",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "format",
+				"type": "string",
+				"required": false,
+				"options": ["csv", "json", "text"],
+				"default": "csv"
+			},
+			{
+				"name": "property",
+				"type": "string",
+				"description": "The file is in binary.<property> of the input",
+				"required": false,
+				"default": "data"
+			},
+			{
+				"name": "delimiter",
+				"type": "string",
+				"required": false,
+				"default": ","
+			},
+			{
+				"name": "header",
+				"type": "boolean",
+				"description": "The first row holds the keys",
+				"required": false,
+				"default": true
+			}
+		]
+	},
+	{
+		"type": "file.compress",
+		"label": "Compression",
+		"description": "Compress a file to gzip, or decompress a gzip file",
+		"category": "data",
+		"icon": "FileArchive",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": ["Compress a file", "Decompress a file"],
+		"fields": [
+			{
+				"name": "operation",
+				"type": "string",
+				"required": false,
+				"options": ["compress", "decompress"],
+				"default": "compress"
+			},
+			{
+				"name": "property",
+				"type": "string",
+				"description": "The file is in binary.<property> of the input",
+				"required": false,
+				"default": "data"
+			},
+			{
+				"name": "outputProperty",
+				"type": "string",
+				"description": "The new file goes to binary.<property> of the output",
+				"required": false,
+				"default": "data"
+			},
+			{
+				"name": "fileName",
+				"type": "string",
+				"description": "Empty: the old name with .gz added, or without .gz",
+				"required": false,
+				"default": ""
+			}
+		]
+	},
+	{
+		"type": "file.disk",
+		"label": "Read/Write Files from Disk",
+		"description": "Read a file from the machine of the worker, or write one to it",
+		"category": "data",
+		"icon": "HardDrive",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": ["Read a file from disk", "Write a file to disk"],
+		"fields": [
+			{
+				"name": "operation",
+				"type": "string",
+				"required": false,
+				"options": ["read", "write"],
+				"default": "read"
+			},
+			{
+				"name": "path",
+				"type": "string",
+				"description": "Relative to the folder in ZERODOT_FILES_DIR. The operator must set that variable.",
+				"required": true,
+				"default": ""
+			},
+			{
+				"name": "property",
+				"type": "string",
+				"description": "Read: the file goes to binary.<property>. Write: the file comes from it.",
+				"required": false,
+				"default": "data"
+			},
+			{
+				"name": "append",
+				"type": "boolean",
+				"description": "Write only: add to the end of the file, and do not replace it",
+				"required": false,
+				"default": false
+			}
+		]
+	},
+	{
+		"type": "rss.read",
+		"label": "RSS Read",
+		"description": "Read the items of an RSS or Atom feed",
+		"category": "core",
+		"icon": "Rss",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "url",
+				"type": "string",
+				"required": true,
+				"default": "https://"
+			},
+			{
+				"name": "limit",
+				"type": "integer",
+				"description": "The most items to return. 0 returns all",
+				"required": false,
+				"default": 0
+			},
+			{
+				"name": "timeoutMs",
+				"type": "integer",
+				"required": false,
+				"default": 30000
+			}
+		]
+	},
+	{
+		"type": "flow.delay",
+		"label": "Wait",
+		"description": "Pause the workflow for a set time, or until a URL gets a call",
+		"category": "flow",
+		"icon": "Timer",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "mode",
+				"type": "string",
+				"required": false,
+				"options": ["time", "webhook"],
+				"default": "time"
+			},
+			{
+				"name": "amount",
+				"type": "number",
+				"required": false,
+				"default": 1
+			},
+			{
+				"name": "unit",
+				"type": "string",
+				"required": false,
+				"options": ["seconds", "minutes", "hours", "days"],
+				"default": "minutes"
+			},
+			{
+				"name": "timeoutAmount",
+				"type": "number",
+				"description": "Optional. When no call comes in this time, the run goes on with timedOut",
+				"required": false
+			},
+			{
+				"name": "timeoutUnit",
+				"type": "string",
+				"required": false,
+				"options": ["seconds", "minutes", "hours", "days"]
+			}
+		]
+	},
+	{
+		"type": "flow.execute_workflow",
+		"label": "Execute Workflow",
+		"description": "Run another workflow and use the output of its last node",
+		"category": "flow",
+		"icon": "Workflow",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "source",
+				"type": "string",
+				"required": false,
+				"options": ["database", "parameter"],
+				"default": "database"
+			},
+			{
+				"name": "workflowId",
+				"type": "string",
+				"description": "The workflow to run. Use an expression to give an id",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "workflowJson",
+				"type": "string",
+				"description": "The graph of a workflow, as JSON",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "mode",
+				"type": "string",
+				"required": false,
+				"options": ["once", "each"],
+				"default": "once"
+			},
+			{
+				"name": "waitForCompletion",
+				"type": "boolean",
+				"description": "Off: start the sub-workflow and go on. The output is the id of its run",
+				"required": false,
+				"default": true
+			}
+		]
+	},
+	{
+		"type": "flow.loop",
+		"label": "Loop Over Items",
+		"description": "Run the nodes on the loop output once for each item or batch",
+		"category": "flow",
+		"icon": "Repeat",
+		"ports": {
+			"in": ["in"],
+			"out": ["done", "loop"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "list",
+				"type": "any",
+				"required": true,
+				"default": "{{ $input }}"
+			},
+			{
+				"name": "batchSize",
+				"type": "integer",
+				"required": false,
+				"default": 1
+			}
+		]
+	},
+	{
+		"type": "flow.noop",
+		"label": "No Op",
+		"description": "Do nothing. Pass the input on",
+		"category": "flow",
+		"icon": "Circle",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": []
+	},
+	{
+		"type": "flow.respond",
+		"label": "Respond to Webhook",
+		"description": "Send the HTTP response for a webhook run",
+		"category": "flow",
+		"icon": "Reply",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "respondWith",
+				"type": "string",
+				"required": false,
+				"options": ["json", "text", "noData"],
+				"default": "json"
+			},
+			{
+				"name": "body",
+				"type": "any",
+				"required": false
+			},
+			{
+				"name": "responseCode",
+				"type": "integer",
+				"required": false,
+				"default": 200
+			},
+			{
+				"name": "responseHeaders",
+				"type": "object",
+				"required": false
+			}
+		]
+	},
+	{
+		"type": "flow.stop_and_error",
+		"label": "Stop and Error",
+		"description": "Fail the workflow with an error message",
+		"category": "flow",
+		"icon": "OctagonX",
+		"ports": {
+			"in": ["in"],
+			"out": []
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "errorType",
+				"type": "string",
+				"required": false,
+				"options": ["message", "object"],
+				"default": "message"
+			},
+			{
+				"name": "errorMessage",
+				"type": "string",
+				"required": false,
+				"default": ""
+			},
+			{
+				"name": "errorObject",
+				"type": "any",
+				"required": false
+			}
+		]
+	},
+	{
+		"type": "code.js",
+		"label": "Code",
+		"description": "Run JavaScript to transform data",
+		"category": "code",
+		"icon": "Code",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "code",
+				"type": "string",
+				"required": true,
+				"default": "// Return the data for the next node. console.log shows in the run.\n// You can read: $input, $trigger, $node[\"Name\"].data, $vars (read only), $run.\nreturn { ...$input };"
+			},
+			{
+				"name": "timeoutMs",
+				"type": "integer",
+				"required": false,
+				"default": 10000
+			}
+		]
+	},
+	{
+		"type": "core.execute_command",
+		"label": "Execute Command",
+		"description": "Run a shell command on the machine of the worker",
+		"category": "core",
+		"icon": "Terminal",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "command",
+				"type": "string",
+				"description": "Runs in a shell. The operator must set ZERODOT_ENABLE_EXECUTE_COMMAND=true.",
+				"required": true,
+				"default": ""
+			},
+			{
+				"name": "timeoutMs",
+				"type": "integer",
+				"required": false,
+				"default": 30000
+			},
+			{
+				"name": "failOnError",
+				"type": "boolean",
+				"description": "Whether the node fails when the command exits with a code that is not 0",
+				"required": false,
+				"default": false
+			}
+		]
+	},
+	{
+		"type": "table.insert",
+		"label": "Insert Rows",
+		"description": "Add new rows to a table",
+		"category": "data",
+		"icon": "ListPlus",
+		"app": "Tables",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "table",
+				"type": "string",
+				"description": "The id or the name of a data table",
+				"required": true,
+				"default": ""
+			},
+			{
+				"name": "rows",
+				"type": "any",
+				"required": false,
+				"default": {}
+			}
+		]
+	},
+	{
+		"type": "table.query",
+		"label": "Query Rows",
+		"description": "Read rows from a table with filters and sort",
+		"category": "data",
+		"icon": "TableProperties",
+		"app": "Tables",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "table",
+				"type": "string",
+				"description": "The id or the name of a data table",
+				"required": true,
+				"default": ""
+			},
+			{
+				"name": "filter",
+				"type": "any",
+				"required": false
+			},
+			{
+				"name": "sort",
+				"type": "any",
+				"required": false
+			},
+			{
+				"name": "limit",
+				"type": "integer",
+				"required": false,
+				"default": 100
+			},
+			{
+				"name": "cursor",
+				"type": "string",
+				"required": false
+			}
+		]
+	},
+	{
+		"type": "table.get",
+		"label": "Get Row",
+		"description": "Read one row from a table by ID",
+		"category": "data",
+		"icon": "Search",
+		"app": "Tables",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "table",
+				"type": "string",
+				"description": "The id or the name of a data table",
+				"required": true,
+				"default": ""
+			},
+			{
+				"name": "by",
+				"type": "string",
+				"description": "The id, or a unique column of the table",
+				"required": false,
+				"default": "id"
+			},
+			{
+				"name": "value",
+				"type": "any",
+				"required": false
+			}
+		]
+	},
+	{
+		"type": "table.get_all",
+		"label": "Get All Rows",
+		"description": "Read all rows of a table, or the rows that match a filter",
+		"category": "data",
+		"icon": "TableProperties",
+		"app": "Tables",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "table",
+				"type": "string",
+				"description": "The id or the name of a data table",
+				"required": true,
+				"default": ""
+			},
+			{
+				"name": "filter",
+				"type": "any",
+				"required": false
+			},
+			{
+				"name": "sort",
+				"type": "any",
+				"required": false
+			},
+			{
+				"name": "limit",
+				"type": "integer",
+				"description": "The most rows to return. Leave empty to return all rows",
+				"required": false
+			}
+		]
+	},
+	{
+		"type": "table.update",
+		"label": "Update Rows",
+		"description": "Change rows in a table that match a filter",
+		"category": "data",
+		"icon": "FilePen",
+		"app": "Tables",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "table",
+				"type": "string",
+				"description": "The id or the name of a data table",
+				"required": true,
+				"default": ""
+			},
+			{
+				"name": "filter",
+				"type": "any",
+				"required": false
+			},
+			{
+				"name": "all",
+				"type": "boolean",
+				"required": false,
+				"default": false
+			},
+			{
+				"name": "set",
+				"type": "object",
+				"required": false,
+				"default": {}
+			},
+			{
+				"name": "increment",
+				"type": "object",
+				"required": false
+			}
+		]
+	},
+	{
+		"type": "table.upsert",
+		"label": "Upsert Row",
+		"description": "Update a row if it exists, else insert it",
+		"category": "data",
+		"icon": "Replace",
+		"app": "Tables",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "table",
+				"type": "string",
+				"description": "The id or the name of a data table",
+				"required": true,
+				"default": ""
+			},
+			{
+				"name": "column",
+				"type": "string",
+				"description": "A unique column. The value comes from the row",
+				"required": true,
+				"default": ""
+			},
+			{
+				"name": "row",
+				"type": "object",
+				"required": true,
+				"default": {}
+			},
+			{
+				"name": "increment",
+				"type": "object",
+				"required": false
+			}
+		]
+	},
+	{
+		"type": "table.delete",
+		"label": "Delete Rows",
+		"description": "Remove rows from a table that match a filter",
+		"category": "data",
+		"icon": "Trash2",
+		"app": "Tables",
+		"ports": {
+			"in": ["in"],
+			"out": ["out"]
+		},
+		"credentialTypes": [],
+		"actions": [],
+		"fields": [
+			{
+				"name": "table",
+				"type": "string",
+				"description": "The id or the name of a data table",
+				"required": true,
+				"default": ""
+			},
+			{
+				"name": "filter",
+				"type": "any",
+				"required": false
+			},
+			{
+				"name": "all",
+				"type": "boolean",
+				"required": false,
+				"default": false
+			}
+		]
+	}
+]

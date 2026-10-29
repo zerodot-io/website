@@ -312,7 +312,7 @@ function PricingPage() {
 										<dd>{tier.instances}</dd>
 									</div>
 								</dl>
-								<a className="btn btn-primary btn-pill buy" href={tier.checkout}>
+								<a className="btn btn-dark btn-pill buy" href={tier.checkout}>
 									Buy {tier.name}
 								</a>
 							</div>

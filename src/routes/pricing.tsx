@@ -11,7 +11,7 @@ export const Route = createFileRoute("/pricing")({
 			{
 				name: "description",
 				content:
-					"zerodot is free under AGPL-3.0. Buy a one-time commercial license to keep your changes private.",
+					"zerodot is free under AGPL-3.0. Buy a commercial license to keep your changes private.",
 			},
 		],
 	}),
@@ -21,48 +21,61 @@ export const Route = createFileRoute("/pricing")({
 interface Tier {
 	name: string;
 	price: string;
+	period: string;
 	use: string;
+	limit: string;
 	developers: string;
 	instances: string;
-	checkout: string;
+	cta: string;
+	href: string;
 }
+
+const CONTACT = "mailto:zerodot@7angle.com?subject=Zerodot%20Enterprise";
 
 const TIERS: Tier[] = [
 	{
 		name: "Hobby",
 		price: "$49",
+		period: "one-time",
 		use: "Keep your changes private. Internal use only.",
+		limit: "For an individual, not a company.",
 		developers: "1",
 		instances: "1",
-		checkout:
-			"https://buy.polar.sh/polar_cl_UcLtahyBIulIZQ7W43747TDloC5rDYGcYnD2C2N9f5A",
+		cta: "Buy Hobby",
+		href: "https://buy.polar.sh/polar_cl_UcLtahyBIulIZQ7W43747TDloC5rDYGcYnD2C2N9f5A",
 	},
 	{
 		name: "Team",
-		price: "$149",
+		price: "$199",
+		period: "one-time",
 		use: "Keep your changes private. Use in a product for sale.",
+		limit: "For companies under $1M yearly revenue.",
 		developers: "Up to 10",
 		instances: "Up to 5",
-		checkout:
-			"https://buy.polar.sh/polar_cl_MTr19tQEIcPxcQZ2FXJoCCwBnrSFsFaFr7zaK0f3iQW",
+		cta: "Buy Team",
+		href: "https://buy.polar.sh/polar_cl_MTr19tQEIcPxcQZ2FXJoCCwBnrSFsFaFr7zaK0f3iQW",
 	},
 	{
-		name: "Organization",
-		price: "$299",
+		name: "Business",
+		price: "$999",
+		period: "per year",
 		use: "Keep your changes private. Use in a product for sale.",
+		limit: "For companies of any revenue.",
+		developers: "Up to 100",
+		instances: "Unlimited",
+		cta: "Buy Business",
+		href: "https://buy.polar.sh/polar_cl_PhIbwDtajfuVkHmHbyMTmehV153856pVwfjCL1fzBpG",
+	},
+	{
+		name: "Enterprise",
+		price: "From $4,999",
+		period: "per year",
+		use: "All uses, and zerodot inside a product that you distribute.",
+		limit: "For large companies and OEM. Custom contract.",
 		developers: "Unlimited",
 		instances: "Unlimited",
-		checkout:
-			"https://buy.polar.sh/polar_cl_mZMYGqHHZR8loqZnw31mngDA1pDqsDqiP7jYq2G3yz7",
-	},
-	{
-		name: "Extended",
-		price: "$499",
-		use: "Put zerodot inside a product that you distribute.",
-		developers: "Unlimited",
-		instances: "1 product",
-		checkout:
-			"https://buy.polar.sh/polar_cl_6QMymQkGv8mufAK7PfpRkNqzhSqeDM717Vtoq2tmrdL",
+		cta: "Contact us",
+		href: CONTACT,
 	},
 ];
 
@@ -80,7 +93,7 @@ const DETAILS: AccordionEntry[] = [
 				</p>
 				<p>
 					A commercial license removes this duty. You can keep your changes
-					private. You pay one time. The code and the features are the same.
+					private. The code and the features are the same.
 				</p>
 			</>
 		),
@@ -96,15 +109,15 @@ const DETAILS: AccordionEntry[] = [
 				</li>
 				<li>
 					<b>You want to keep your changes private.</b> Buy Hobby, Team, or
-					Organization.
+					Business.
 				</li>
 				<li>
-					<b>You sell a product that uses zerodot.</b> Buy Team or Organization.
+					<b>You sell a product that uses zerodot.</b> Buy Team or Business.
 				</li>
 				<li>
 					<b>You put zerodot inside a product that you distribute.</b> This
 					includes SDKs, templates, white-label products, and installable
-					products. Buy Extended.
+					products. Contact us for Enterprise.
 				</li>
 			</ul>
 		),
@@ -115,20 +128,23 @@ const DETAILS: AccordionEntry[] = [
 		body: (
 			<ul>
 				<li>
-					<b>Hobby, $49.</b> One developer and one instance. For personal and
-					internal use. Not for a product for sale.
+					<b>Hobby, $49 one time.</b> One developer and one instance. For an
+					individual, not a company. Not for a product for sale.
 				</li>
 				<li>
-					<b>Team, $149.</b> Up to 10 developers and 5 instances. You can use it
-					in a product for sale.
+					<b>Team, $199 one time.</b> Up to 10 developers and 5 instances. For
+					companies under $1M yearly revenue. You can use it in a product for
+					sale.
 				</li>
 				<li>
-					<b>Organization, $299.</b> Unlimited developers and instances. You can
-					use it in a product for sale.
+					<b>Business, $999 per year.</b> Up to 100 developers and unlimited
+					instances. For companies of any revenue. You can use it in a product
+					for sale.
 				</li>
 				<li>
-					<b>Extended, $499.</b> Unlimited developers and one product. Required
-					when zerodot is part of a product that you distribute.
+					<b>Enterprise, from $4,999 per year.</b> Unlimited developers and
+					instances. Required when zerodot is part of a product that you
+					distribute. Custom contract.
 				</li>
 			</ul>
 		),
@@ -165,13 +181,14 @@ const DETAILS: AccordionEntry[] = [
 		body: (
 			<>
 				<p>
-					Yes. You get all updates inside the major version that you buy, for
-					example 0.x or 1.x, at no extra cost.
+					Hobby and Team get all updates inside the major version that you buy,
+					for example 0.x or 1.x. Business and Enterprise get all updates while
+					the license is active.
 				</p>
 				<p>
-					A new major version needs a new license. If you bought a license in
-					the 6 months before a new major version, send us an email and we
-					exchange it.
+					For Hobby and Team, a new major version needs a new license. If you
+					bought a license in the 6 months before a new major version, send us
+					an email and we exchange it.
 				</p>
 			</>
 		),
@@ -181,8 +198,10 @@ const DETAILS: AccordionEntry[] = [
 		title: "Does the license expire?",
 		body: (
 			<p>
-				No. You pay one time. The license does not expire and it is not
-				exclusive. There is no subscription.
+				Hobby and Team do not expire. You pay one time. Business and Enterprise
+				last one year and renew each year. If you do not renew, you keep every
+				version that we released during your paid term. You get no new versions.
+				You can cancel at any time.
 			</p>
 		),
 	},
@@ -223,8 +242,8 @@ const DETAILS: AccordionEntry[] = [
 		title: "What if my team grows?",
 		body: (
 			<p>
-				If you go over the limit of your tier, buy the next tier. We credit what
-				you paid for the lower tier.
+				If you go over the developer limit or the revenue limit of your tier,
+				buy the next tier. We credit what you paid for the lower tier.
 			</p>
 		),
 	},
@@ -272,7 +291,8 @@ function PricingPage() {
 					<h1>Free to use. Pay to keep it private.</h1>
 					<p>
 						zerodot is free under AGPL-3.0. If you cannot follow the AGPL, buy a
-						commercial license. You pay one time. There is no subscription.
+						commercial license. Hobby and Team are one-time. Business and
+						Enterprise are yearly.
 					</p>
 					<div className="actions">
 						<a className="link-arrow" href={LICENSE_URL}>
@@ -293,15 +313,16 @@ function PricingPage() {
 							<div
 								key={tier.name}
 								className={
-									tier.name === "Extended" ? "doc-card tier-wide" : "doc-card"
+									tier.name === "Enterprise" ? "doc-card tier-wide" : "doc-card"
 								}
 							>
 								<h3 className="tier-name">{tier.name}</h3>
 								<p className="tier-price">
 									{tier.price}
-									<small>one-time</small>
+									<small>{tier.period}</small>
 								</p>
 								<p className="tier-use">{tier.use}</p>
+								<p className="tier-use">{tier.limit}</p>
 								<dl className="tier-specs">
 									<div>
 										<dt>Developers</dt>
@@ -312,8 +333,8 @@ function PricingPage() {
 										<dd>{tier.instances}</dd>
 									</div>
 								</dl>
-								<a className="btn btn-dark btn-pill buy" href={tier.checkout}>
-									Buy {tier.name}
+								<a className="btn btn-dark btn-pill buy" href={tier.href}>
+									{tier.cta}
 								</a>
 							</div>
 						))}

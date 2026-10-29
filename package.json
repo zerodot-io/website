@@ -18,6 +18,7 @@
     "sync:docs": "node scripts/sync-docs.mjs"
   },
   "dependencies": {
+    "@base-ui/react": "^1.5.0",
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource-variable/geist-mono": "^5.3.0",
     "@tanstack/react-devtools": "0.10.13",

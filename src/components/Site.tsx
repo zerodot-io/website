@@ -10,6 +10,7 @@ export function SiteNav({ onAccent = false }: { onAccent?: boolean }) {
 			<nav className="nav-links" aria-label="Main">
 				<Link to="/nodes">Nodes</Link>
 				<Link to="/docs">Docs</Link>
+				<Link to="/pricing">Pricing</Link>
 				<a href={REPO}>GitHub</a>
 				<a className="nav-cta" href="/#start">
 					Get started
@@ -26,6 +27,7 @@ export function SiteFooter() {
 			<nav aria-label="Footer">
 				<Link to="/nodes">Nodes</Link>
 				<Link to="/docs">Docs</Link>
+				<Link to="/pricing">Pricing</Link>
 				<a href={REPO}>GitHub</a>
 				<a href={`${REPO}/blob/main/LICENSE`}>AGPL-3.0-only</a>
 				<Link to="/docs/$slug" params={{ slug: "install" }}>

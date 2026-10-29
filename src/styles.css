@@ -3422,3 +3422,120 @@ code.meta-chip {
 .prose pre code {
   color: inherit;
 }
+
+.doc-card .price {
+  color: var(--accent-text);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.tiers .tier-wide {
+  grid-column: 1 / -1;
+  background: #fff4e8;
+  border-color: #ffd9b8;
+}
+
+.terms {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--body-2);
+  font-size: 15px;
+}
+
+/* ---------- accordion ---------- */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-gray-2);
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--color-gray-2);
+}
+
+.accordion-header {
+  margin: 0;
+  display: flex;
+}
+
+.accordion-trigger {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 4px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.accordion-trigger svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: var(--color-gray-1);
+  transition: rotate 200ms var(--ease-out);
+}
+
+.accordion-trigger[data-panel-open] svg {
+  rotate: 180deg;
+}
+
+.accordion-panel {
+  height: var(--accordion-panel-height);
+  overflow: hidden;
+  transition: height 200ms var(--ease-out), opacity 200ms var(--ease-out);
+}
+
+.accordion-panel[data-starting-style],
+.accordion-panel[data-ending-style] {
+  height: 0;
+  opacity: 0;
+}
+
+.accordion-body {
+  display: grid;
+  gap: 12px;
+  max-width: 44em;
+  padding: 0 4px 20px;
+  color: var(--body-2);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.accordion-body p,
+.accordion-body ul {
+  margin: 0;
+}
+
+.accordion-body ul {
+  display: grid;
+  gap: 6px;
+  padding-left: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-panel,
+  .accordion-trigger svg {
+    transition: none;
+  }
+}
+
+.doc-card .buy {
+  align-self: flex-start;
+  margin-top: auto;
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-ink);
+}

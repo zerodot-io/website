@@ -3486,9 +3486,6 @@ code.meta-chip {
   align-self: stretch;
   justify-content: center;
   margin-top: auto;
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: var(--color-ink);
 }
 
 .tiers .tier-wide {
@@ -3521,12 +3518,6 @@ code.meta-chip {
     grid-column: 2;
     grid-row: 4;
     margin-top: 24px;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .tiers .buy:hover {
-    background: #ff7d1f;
   }
 }
 
@@ -3625,12 +3616,4 @@ code.meta-chip {
   .accordion-trigger svg {
     transition: none;
   }
-}
-
-.doc-card .buy {
-  align-self: flex-start;
-  margin-top: auto;
-  border-color: var(--color-accent);
-  background: var(--color-accent);
-  color: var(--color-ink);
 }

@@ -296,11 +296,22 @@ function PricingPage() {
 									tier.name === "Extended" ? "doc-card tier-wide" : "doc-card"
 								}
 							>
-								<b>{tier.name}</b>
-								<span className="price">{tier.price}</span>
-								<small>{tier.use}</small>
-								<small>Developers: {tier.developers}</small>
-								<small>Instances: {tier.instances}</small>
+								<h3 className="tier-name">{tier.name}</h3>
+								<p className="tier-price">
+									{tier.price}
+									<small>one-time</small>
+								</p>
+								<p className="tier-use">{tier.use}</p>
+								<dl className="tier-specs">
+									<div>
+										<dt>Developers</dt>
+										<dd>{tier.developers}</dd>
+									</div>
+									<div>
+										<dt>Instances</dt>
+										<dd>{tier.instances}</dd>
+									</div>
+								</dl>
 								<a className="btn btn-dark btn-pill buy" href={tier.checkout}>
 									Buy {tier.name}
 								</a>
